@@ -6,6 +6,7 @@ gem 'gitlab'
 gem 'htmlbeautifier'
 gem 'parallel'
 gem 'sinatra'
+gem 'puma'
 
 group :development, :test do
   gem 'pry'

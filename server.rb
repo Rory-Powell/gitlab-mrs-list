@@ -5,6 +5,7 @@ require_relative 'helpers/gitlab_service'
 
 Tilt.register Tilt::ERBTemplate, 'html.erb'
 set :port, 4000
+set :bind, '0.0.0.0'
 
 get '/' do
   erb :index
@@ -19,7 +20,9 @@ get '/mr' do
 end
 
 get '/mrs' do
-  erb :mrs, locals: { merge_requests: GitlabService.fetch_merge_requests }
+  merge_requests = GitlabService.fetch_merge_requests
+  sorted_merge_requests = merge_requests.sort_by { |mr| mr.created_at }.reverse
+  erb :mrs, locals: { merge_requests: sorted_merge_requests }
 end
 
 get '/mr.json' do
